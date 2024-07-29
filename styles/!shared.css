@@ -53,3 +53,18 @@ table {
 html {
     background-color: var(--html-background-color);
 }
+
+
+
+header {
+    align-items: center;
+}
+
+body {
+    align-items: center;
+}
+
+footer {
+    align-items: center;
+}
+
