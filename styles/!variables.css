@@ -2,9 +2,12 @@
 :root {
     /* >>> SHARED <<< */
     /* Colors */
-    --color-primary: red;
+    --color-primary: rgb(255, 242, 183);
     --color-secundary: beige;
-    --color-tertiary: beige;
+    --color-tertiary: white;
+
+    --color-link: rgb(255, 139, 139);
+    --color-hover: rgb(255, 185, 185);
 
     --color-black: black;
     --color-white: white;
