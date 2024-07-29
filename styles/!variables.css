@@ -1,40 +1,81 @@
+
 :root {
+    /* >>> SHARED <<< */
+    /* Colors */
+    --color-primary: red;
+    --color-secundary: beige;
+    --color-tertiary: beige;
+
+    --color-black: black;
+    --color-white: white;
+    --color-light-grey: #f3f3f3;
+    --color-dark-grey: #353535;
+
+    /* Defaults */
+    --default-font-family: Arial, sans-serif;
+    --default-font-size: 1.6rem;
+    --default-font-weight: 400;
+    --default-font-color: var(--color-black);
+
+    /* html */
+    --html-background-color: var(--color-white);
+    --html-padding: 1;
+
+    /* header */
     --a: 1;
+
+    /* body */
     --a: 1;
+
+    /* footer */
     --a: 1;
+
+
+    /* >>> INDEX <<< */
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+
+    /* >>> LOGIN <<< */
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+
+    /* >>> PLACE <<< */
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+
+    /* >>> ADD_REVIEW <<< */
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
+
+    /*  */
     --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
-    --a: 1;
+}
+
+[data-section-theme="dark"] {
+    --default-font-color: var(--color-white);
+    --html-background-color: var(--color-black);
 }
