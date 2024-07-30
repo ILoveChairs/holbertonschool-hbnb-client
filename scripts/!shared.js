@@ -9,13 +9,13 @@ access to elements.
 function setCookie(cname, cvalue) {
   const d = new Date();
   d.setTime(d.getTime() + (12 * 60 * 60 * 1000));
-  let expires = 'expires='+d.toUTCString();
+  const expires = 'expires='+d.toUTCString();
   document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
 }
 
 function getCookie(cname) {
-  let name = cname + '=';
-  let ca = document.cookie.split(';');
+  const name = cname + '=';
+  const ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) == ' ') {
@@ -46,7 +46,8 @@ function checkJwtToken() {
 
 /* To be called on every window.load */
 function loadSharedFunctions() {
-  loginButton = document.getElementById('login-button');
+  // If logged in don't show login button
+  const loginButton = document.getElementById('login-button');
   if (checkJwtToken()) {
     loginButton.style = 'visibility: hidden';
   }
