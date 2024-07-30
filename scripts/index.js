@@ -78,11 +78,15 @@ window.onload = () => {
   // Load all shared functions that need onload from !shared.js
   loadSharedFunctions()
 
-  // When filter is changed apply filter calling display with filter as arg.
   const countryFilter = document.getElementById('country-filter');
+
+  // When filter is changed apply filter calling display with filter as arg.
   countryFilter.addEventListener('change', () => {
     displayPlaces(placesList, countryFilter.value);
   });
+
+  // Populate filter
+  populateCountryFilter(countryFilter);
 
   // Call appi to fetch places
   fetchPlaces();
