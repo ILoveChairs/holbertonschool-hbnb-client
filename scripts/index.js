@@ -6,6 +6,7 @@ const placesList = [];
 
 /* Individually creates a card */
 async function createCard(place, father) {
+  const div = document.createElement('div');
   const article = document.createElement('article');
   const name = document.createElement('h2');
   const price = document.createElement('p');
@@ -17,6 +18,8 @@ async function createCard(place, father) {
   location.innerHTML = `Location: ${place.city_name}, ${place.country_name}`;
   viewDetails.innerHTML = 'View Details';
 
+  div.id = place.id;
+  article.classList = ['places']
   viewDetails.href = `http://localhost:5000/places/${place.id}`;
 
   article.appendChild(name);
@@ -24,7 +27,8 @@ async function createCard(place, father) {
   article.appendChild(location);
   article.appendChild(viewDetails);
 
-  father.appendChild(article);
+  div.appendChild(article)
+  father.appendChild(div);
 }
 
 /* Creates all place cards calling createCard */
@@ -35,30 +39,46 @@ function createPlaces(places) {
   }
 }
 
+/* Hide and unhide filtered cards */
+function filterPlaces(filteredPlaces) {
+  const placesElement = document.getElementById('places-list');
+  const children = placesElement.children;
+
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+    console.log(child)
+    if (filteredPlaces.map((place) => place.id).includes(child.id)) {
+      child.style.display = 'block';
+    } else {
+      child.style.display = 'none';
+    }
+  }
+}
+
 /* Manages the filters and then calls createPlaces */
 function displayPlaces(places=placesList, countryFilter='0') {
-  const selection = [];
-
   if (countryFilter === '0') {
-    selection = places;
-  } else {
-    selection = places.filter((place) => {
-      place.country_code === countryFilter;
-    });
+    createPlaces(places);
+    return;
   }
-  createPlaces(selection);
+  selection = places.filter((place) => {
+    return place.country_code === countryFilter;
+  });
+  filterPlaces(selection);
 }
 
 /* Does the fetch and calls displayPlaces */
 function fetchPlaces() {
-  const headers = {}
-  const options = {headers};
+  const headers = {Accept: 'application/json', }
+  const options = {method: 'GET', mode: 'cors', headers};
   const token = getJwtToken();
   if (token !== '') {
     headers['Authorization'] = `Bearer ${token}`
   }
-  fetch('https://localhost:5000/places', options)
-    .then((response) => response.json())
+  fetch('http://localhost:5000/places', options)
+    .then((response) => {
+      return response.json();
+    })
     .then((data) => {
       // Clears array
       placesList.length = 0;
@@ -70,7 +90,8 @@ function fetchPlaces() {
       displayPlaces(placesList);
     })
     .catch((err) => {
-      console.log(err.toString());
+      //console.log(err.toString());
+      throw err;
     });
 }
 
@@ -81,14 +102,14 @@ window.onload = () => {
   const countryFilter = document.getElementById('country-filter');
 
   // When filter is changed apply filter calling display with filter as arg.
-  countryFilter.addEventListener('change', () => {
+  countryFilter.onchange = () => {
     displayPlaces(placesList, countryFilter.value);
-  });
+  };
 
   // Populate filter
   populateCountryFilter(countryFilter);
 
-  // Call appi to fetch places
+  // Call api to fetch places
   fetchPlaces();
 
 };

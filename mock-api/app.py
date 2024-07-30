@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import json
 from uuid import uuid4
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -97,4 +98,5 @@ def add_review(place_id):
     return jsonify({"msg": "Review added"}), 201
 
 if __name__ == '__main__':
+    CORS(app);
     app.run(debug=True)

@@ -63,12 +63,13 @@ p {
 
 
 html {
+    width: 100%;
     background-color: var(--html-background-color);
 }
 
 body {
     height: 100vh;
-    width: 100vw;
+    width: 100%;
 
     text-align: center;
 }
@@ -77,6 +78,7 @@ body {
 .header {
     height: 10%;
     width: 100%;
+
     padding: 1rem;
 
     background-color: var(--color-primary);
@@ -115,7 +117,9 @@ body {
 }
 
 .main {
-    height: 80%;
+    min-height: 80%;
+    width: 100%;
+
     margin: 0;
     padding: 1rem;
 
