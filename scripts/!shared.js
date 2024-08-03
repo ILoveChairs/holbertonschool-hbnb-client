@@ -6,6 +6,7 @@ access to elements.
 
 /* Functions from https://www.w3schools.com/js/js_cookies.asp */
 /* Set cookie modified to have fixed expire date, half a day. */
+/* Should not be called directly, instead use jwt cookie functions */
 function setCookie(cname, cvalue) {
   const d = new Date();
   d.setTime(d.getTime() + (12 * 60 * 60 * 1000));
@@ -46,8 +47,10 @@ function checkJwtToken() {
 
 /* To be called on every window.load */
 function loadSharedFunctions() {
-  // If logged in, don't show login button.
+
   const loginButton = document.getElementById('login-button');
+
+  // If logged in, hide login button.
   if (checkJwtToken()) {
     loginButton.style = 'visibility: hidden';
   }

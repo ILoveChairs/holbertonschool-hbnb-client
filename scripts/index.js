@@ -4,7 +4,7 @@ with the country filter selector. */
 
 const placesList = [];
 
-/* Individually creates a card */
+/* Individually creates a place card */
 async function createCard(place, father) {
   const div = document.createElement('div');
   const article = document.createElement('article');
@@ -20,7 +20,7 @@ async function createCard(place, father) {
 
   div.id = place.id;
   article.classList = ['places']
-  viewDetails.href = `http://localhost:5000/places/${place.id}`;
+  viewDetails.href = `place.html?id=${place.id}`;
 
   article.appendChild(name);
   article.appendChild(price);
