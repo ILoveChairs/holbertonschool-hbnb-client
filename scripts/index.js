@@ -70,7 +70,7 @@ function displayPlaces(places=placesList, countryFilter='0') {
 /* Does the fetch and calls displayPlaces */
 function fetchPlaces() {
   const headers = {Accept: 'application/json', }
-  const options = {method: 'GET', mode: 'cors', headers};
+  const options = {method: 'GET', headers};
   const token = getJwtToken();
   if (token !== '') {
     headers['Authorization'] = `Bearer ${token}`
