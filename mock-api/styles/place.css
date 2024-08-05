@@ -1,0 +1,152 @@
+
+#place-details {
+    padding: 1rem;
+    display: flex;
+    background-color: var(--color-primary);
+    border: 2px, solid, black;
+    align-items: center;
+    flex-direction: column;
+}
+.place {
+    display: flex;
+    padding: 0;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+.place-details-inside-div {
+    display: flex;
+    padding: 0;
+    text-align: center;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.place-details-inside-div p {
+    padding: 1rem;
+}
+.place-details-inside-div img {
+    width: 2rem;
+    height: 2rem;
+}
+.amenity-div {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+}
+#amenities-list-div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#reviews {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.review {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 6%;
+    margin: 1rem;
+}
+.review-inside-div {
+    padding: 0.5rem;
+    display: inline;
+}
+.review-inside-div p {
+    width: 100%;
+    height: 100%;
+}
+#review-rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    font-size: 30px
+}
+#review-rating span {
+    width: 2rem;
+    height: 2rem;
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    font-size: 30px;
+}
+#review-rating span:before {
+    content: "\f006";
+    padding-right: 5px;
+    color: #777
+}
+#review-rating span.checked:before {
+    content: "\f005";
+    color: #e3cf7a
+}
+
+#add-review {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#review-form {
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#review-form label, #review-form textarea, #review-form button {
+    padding: 0.2rem;
+    margin: 0.5rem;
+}
+#review-form textarea {
+    width: 30rem;
+    height: 5rem;
+    resize: none;
+}
+
+#add-review-rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    font-size: 30px
+}
+#add-review-rating span {
+    width: 2rem;
+    height: 2rem;
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    font-size: 30px;
+}
+#add-review-rating span:before {
+    content: "\f006";
+    padding-right: 5px;
+    color: #777
+}
+#add-review-rating span:hover:before, #add-review-rating span:hover~span:before {
+    content: "\f005";
+    color: #e3cf7a
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Place Details</title>
     <link rel="icon" type="image/png" href="./images/icon.png">
+    <link rel="stylesheet" href="styles/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/!variables.css">
     <link rel="stylesheet" href="styles/!shared.css">
     <link rel="stylesheet" href="styles/place.css">
@@ -34,13 +35,19 @@
             <!-- Reviews will be populated dynamically -->
         </section>
         <section id="add-review">
-            <h2>Add a Review</h2>
-            <form id="review-form">
-                <label for="review-text">Review:</label>
-                <textarea id="review-text" name="review-text" required></textarea>
-                
-                <button type="submit">Submit</button>
-            </form>
+            <h2>Add a Review!</h2>
+                <form id="review-form">
+                    <label for="reviewText">Review:</label>
+                    <div id="add-review-rating">
+                        <span id="star-1"></span>
+                        <span id="star-2"></span>
+                        <span id="star-3"></span>
+                        <span id="star-4"></span>
+                        <span id="star-5"></span>
+                    </div>
+                    <textarea id="reviewText" name="reviewText" required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
         </section>
     </main>
 

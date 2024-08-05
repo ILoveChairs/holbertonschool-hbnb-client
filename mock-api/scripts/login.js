@@ -28,7 +28,6 @@ window.onload = () => {
   // Adds handler for login form
   loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      console.log('login attempt');
       loginUser(loginForm.email.value, loginForm.password.value);
   });
 };

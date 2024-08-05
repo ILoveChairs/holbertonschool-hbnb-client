@@ -4,6 +4,7 @@
  */
 
 let reviewNum = 0;
+let currentRating = 5;
 
 /* Individually creates a detailed place card */
 async function createDetailedPlaceCard(place, father, placeName) {
@@ -30,13 +31,13 @@ async function createDetailedPlaceCard(place, father, placeName) {
   placeName.innerHTML = place.description;
 
   // Normal text assignment
-  host.innerHTML = place.host_name;
-  price.innerHTML = `Price per night: \$${place.price_per_night}`;
-  location.innerHTML = `Location: ${place.city_name}, ${place.country_name}`;
-  maxGuests.innerHTML = `Max Guests: ${place.max_guests}`;
-  latitude.innerHTML = `Latitude: ${place.latitude}`;
-  longitude.innerHTML = `Longitude: ${place.longitude}`;
-  amenitiesLabel.innerHTML = 'What this place offers';
+  host.innerHTML = `<b>Host:</b> ${place.host_name}`;
+  price.innerHTML = `<b>Price per night:</b> \$${place.price_per_night}`;
+  location.innerHTML = `<b>Location:</b> ${place.city_name}, ${place.country_name}`;
+  maxGuests.innerHTML = `<b>Max Guests:</b> ${place.max_guests}`;
+  latitude.innerHTML = `<b>Latitude:</b> ${place.latitude}`;
+  longitude.innerHTML = `<b>Longitude:</b> ${place.longitude}`;
+  amenitiesLabel.innerHTML = '<b>What this place offers:</b>';
 
   // Number of Rooms
   const nOfRoomsImage = document.createElement('img');
@@ -56,6 +57,7 @@ async function createDetailedPlaceCard(place, father, placeName) {
 
   // Ids and classes
   mainDiv.id = place.id;
+  mainDiv.classList.add('place');
   nOfRoomsDiv.id = 'num-of-rooms';
   nOfRoomsDiv.classList.add('num-of');
   nOfBathroomsDiv.id = 'num-of-bathrooms';
@@ -88,6 +90,22 @@ async function createDetailedPlaceCard(place, father, placeName) {
     amenitiesList.appendChild(amenityNode);
   }
 
+  hostDiv.id = 'host-div';
+  priceDiv.id = 'price-div';
+  locationDiv.id = 'location-div';
+  nOfRoomsDiv.id = 'nofrooms-div';
+  nOfBathroomsDiv.id = 'nofbathrooms-div';
+  coordinatesDiv.id = 'coordinates-div';
+  amenitiesListDiv.id = 'amenities-list-div';
+
+  hostDiv.classList.add('place-details-inside-div');
+  priceDiv.classList.add('place-details-inside-div');
+  locationDiv.classList.add('place-details-inside-div');
+  nOfRoomsDiv.classList.add('place-details-inside-div');
+  nOfBathroomsDiv.classList.add('place-details-inside-div');
+  coordinatesDiv.classList.add('place-details-inside-div');
+  amenitiesListDiv.classList.add('place-details-inside-div');
+
   hostDiv.appendChild(host);
   priceDiv.appendChild(price);
   locationDiv.appendChild(location);
@@ -112,6 +130,10 @@ async function createReviewCard(review, father) {
   const div = document.createElement('div');
   const article = document.createElement('article');
 
+  const userNameDiv = document.createElement('div');
+  const ratingDiv = document.createElement('div');
+  const commentDiv = document.createElement('div');
+
   const userName = document.createElement('p');
   const rating = document.createElement('p');
   const comment = document.createElement('p');
@@ -120,26 +142,37 @@ async function createReviewCard(review, father) {
   comment.innerHTML = review.comment;
 
   // Rating stars
-  for (let i = 0; i <= 5; i++) {
-    const star = document.createElement('i');
-    star.classList = ['fa', 'fa-star', 'review-rating']
+  for (let i = 5; i > 0; i--) {
+    const star = document.createElement('span');
+    star.classList = ['star', 'review-rating'];
     if (i <= review.rating) {
-      star.classList = ['fa', 'fa-star', 'checked', 'review-rating']
+      star.classList.add('checked');
     }
     rating.appendChild(star);
   }
 
-  userName.classList = ['review-username']
-  comment.classList = ['review-comment']
+  userNameDiv.id = 'review-username';
+  ratingDiv.id = 'review-rating';
+  commentDiv.id = 'review-comment';
+  userNameDiv.classList.add('review-inside-div');
+  ratingDiv.classList.add('review-inside-div');
+  commentDiv.classList.add('review-inside-div');
+
+  userName.classList.add('review-username');
+  comment.classList.add('review-comment');
 
   // reviewNum global var
-  div.id = reviewNum;
+  div.id = `review-${reviewNum}`;
   reviewNum += 1;
-  article.classList = ['reviews'];
+  article.classList.add('review');
 
-  article.appendChild(userName);
-  article.appendChild(rating);
-  article.appendChild(comment);
+  userNameDiv.appendChild(userName);
+  ratingDiv.appendChild(rating);
+  commentDiv.appendChild(comment);
+
+  article.appendChild(userNameDiv);
+  article.appendChild(ratingDiv);
+  article.appendChild(commentDiv);
 
   div.appendChild(article);
   father.appendChild(div);
@@ -150,9 +183,57 @@ async function unspecifiedPlace(header) {
   header.innerHTML = 'ERROR: Place not set';
 }
 
+// Sends review
+async function sendReview(review, placeId) {
+  const rating = currentRating;
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+  const options = {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+       rating,
+       review,
+      }),
+  };
+  const token = getJwtToken();
+  if (token !== '') {
+    headers['Authorization'] = `Bearer ${token}`
+  }
+  fetch(`http://localhost:5000/places/${placeId}/reviews`, options)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.hasOwnProperty('msg')) {
+        location.reload();
+      } else {
+        console.log(data);
+      }
+    })
+    .catch((err) => {
+      console.log(err.toString());
+    });
+}
+
+async function updateAddReviewStars(reviewFormStars, rating) {
+  currentRating = rating;
+  let i = 5;
+  for (const star of reviewFormStars.children) {
+    star.classList = ['star', 'review-rating'];
+    if (i <= rating) {
+      star.classList.add('checked');
+    }
+    reviewFormStars.appendChild(star);
+    i -= 1;
+  }
+}
+
 // Api caller
 async function getPlace(placeId, placeName, placeSection, reviewSection) {
-  const headers = {Accept: 'application/json', }
+  const headers = {Accept: 'application/json'}
   const options = {method: 'GET', headers};
   const token = getJwtToken();
   if (token !== '') {
@@ -164,11 +245,7 @@ async function getPlace(placeId, placeName, placeSection, reviewSection) {
     })
     .then((data) => {
       createDetailedPlaceCard(data, placeSection, placeName);
-      console.log('Entering reviews');
-      console.log(data);
       for (const review of data.reviews) {
-        console.log('Entering for');
-        console.log(review);
         createReviewCard(review, reviewSection);
       }
     })
@@ -185,6 +262,8 @@ window.onload = () => {
   const placeName = document.getElementById('place-name');
   const placeSection = document.getElementById('place-details');
   const reviewSection = document.getElementById('reviews');
+  const reviewForm = document.getElementById('review-form');
+  const reviewFormStars = document.getElementById('add-review-rating');
 
   // If not logged in, hide add review form and text
   if (!checkJwtToken()) {
@@ -202,4 +281,20 @@ window.onload = () => {
     // Calls api to get details of place
     getPlace(placeId, placeName, placeSection, reviewSection);
   }
+
+  reviewForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    sendReview(reviewForm.reviewText.value, placeId);
+  });
+
+  const star1 = document.getElementById('star-1');
+  star1.onclick = () => {updateAddReviewStars(reviewFormStars, 1)}
+  const star2 = document.getElementById('star-2');
+  star2.onclick = () => {updateAddReviewStars(reviewFormStars, 2)}
+  const star3 = document.getElementById('star-3');
+  star3.onclick = () => {updateAddReviewStars(reviewFormStars, 3)}
+  const star4 = document.getElementById('star-4');
+  star4.onclick = () => {updateAddReviewStars(reviewFormStars, 4)}
+  const star5 = document.getElementById('star-5');
+  star5.onclick = () => {updateAddReviewStars(reviewFormStars, 5)}
 };
